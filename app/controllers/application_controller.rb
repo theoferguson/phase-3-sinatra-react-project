@@ -6,4 +6,14 @@ class ApplicationController < Sinatra::Base
     { message: "Good luck with your project!" }.to_json
   end
 
+  get "/players" do
+    players = Player.all
+    players.to_json
+  end
+
+  get "/players/:id" do
+    player = Player.find(params[:id])
+    player.to_json(include: { team: { include: {players: {include: :position}}} })
+  end
+
 end
