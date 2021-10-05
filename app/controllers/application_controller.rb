@@ -8,12 +8,12 @@ class ApplicationController < Sinatra::Base
 
   get "/players" do
     players = Player.all
-    players.to_json
+    players.to_json(include: [:team, :position])
   end
 
   get "/players/:id" do
     player = Player.find(params[:id])
-    player.to_json(include: { team: { include: {players: {include: :position}}} })
+    player.to_json(include: [{ team: { include: {players: {include: :position}}} }, :position])
   end
 
 end
