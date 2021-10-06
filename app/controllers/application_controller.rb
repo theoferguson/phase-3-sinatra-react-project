@@ -16,4 +16,10 @@ class ApplicationController < Sinatra::Base
     player.to_json(include: [{ team: { include: {players: {include: :position}}} }, :position])
   end
 
+  delete "/players/:id" do
+    player = Player.find(params[:id])
+    player.destroy
+    player.to_json
+  end
+
 end
