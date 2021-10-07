@@ -6,6 +6,16 @@ class ApplicationController < Sinatra::Base
     { message: "Good luck with your project!" }.to_json
   end
 
+  get "/teams" do
+    teams = Team.all
+    teams.to_json
+  end
+
+  get "/positions" do
+    positions = Position.all
+    positions.to_json
+  end
+
   get "/players" do
     players = Player.all
     players.to_json(include: [:team, :position])
@@ -22,11 +32,11 @@ class ApplicationController < Sinatra::Base
     player.to_json
   end
 
-  post "/player" do
+  post "/players" do
     player = Player.create(
       name: params[:name],
-      team_id: params[:team_id],
-      position_id: params[:position_id]
+      team_id: Team.find_by(name: params[:team]).id,
+      position_id: Position.find_by(name: params[:position]).id
     )
     player.to_json
 
