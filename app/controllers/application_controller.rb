@@ -22,4 +22,14 @@ class ApplicationController < Sinatra::Base
     player.to_json
   end
 
+  post "/player" do
+    player = Player.create(
+      name: params[:name],
+      team_id: params[:team_id],
+      position_id: params[:position_id]
+    )
+    player.to_json
+
+  end
+
 end
